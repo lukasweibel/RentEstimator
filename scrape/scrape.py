@@ -9,7 +9,8 @@ from utils.utils import extract_zip_code, extract_number, mixed_number_to_decima
 
 def start_scraping():
     timeout = 3000
-    cities = ['Dinhard', 'Seuzach', 'Winterthur', 'Luzern', 'Bern', 'Zürich', 'Lausanne', 'Basel', 'Genf', 'Lugano', 'Bellinzona', 'Aarau', 'Olten', 'Baden']
+    #cities = ['Dinhard', 'Seuzach', 'Winterthur', 'Luzern', 'Bern', 'Zürich', 'Lausanne', 'Basel', 'Genf', 'Lugano', 'Bellinzona', 'Aarau', 'Olten', 'Baden']
+    cities = ['Dinhard', 'Seuzach', 'Winterthur']
 
     def run(playwright):
 
