@@ -4,18 +4,16 @@ from utils.utils import extract_zip_code, extract_number, mixed_number_to_decima
 from db.db_accessor import add_entry_to_db, delete_all_entries
 import csv
 
-# Define your scraping logic as a function
 def start_scraping():
     timeout = 3000
     cities = ['Dinhard', 'Seuzach', 'Winterthur', 'Luzern', 'Bern', 'Zürich', 'Lausanne', 'Basel', 'Genf', 'Lugano', 'Bellinzona', 'Aarau', 'Olten', 'Baden']
 
     def run(playwright):
 
-        #delete_all_entries()
+        delete_all_entries()
         failures = 0
         
         browser = playwright.chromium.launch(headless=True)
-        #context = browser.new_context(record_video_dir='videos/', record_video_size={'width': 1280, 'height': 720})
 
         for city in cities:
             context = browser.new_context()
@@ -61,8 +59,6 @@ def start_scraping():
                 except PlaywrightTimeoutError as e:
                     print(f"Encountered a timeout: {e}")
                     failures = failures + 1
-                #except IndexError as e:
-                #    print(f"Encountered an IndexError: {e}")
                 finally:
                     index = index + 1
                     page.go_back()
@@ -86,3 +82,6 @@ def run_scraping():
     print("Starting scraping process...")
     start_scraping()
     print("Scraping process finished.")
+
+if __name__ == "__main__":
+    run_scraping()
