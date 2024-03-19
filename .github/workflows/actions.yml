@@ -27,3 +27,4 @@ jobs:
         env:
           MONGODB_URI: ${{ secrets.MONGODB_URI }}
         run: python scrape/scrape.py
+        working-directory: RentEstimator
