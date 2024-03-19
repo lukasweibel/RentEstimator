@@ -19,12 +19,8 @@ jobs:
 
       - name: install python packages
         run: pip install -r requirements.txt
-        
-      - name: export pythonpath
-        run: export PYTHONPATH="${PYTHONPATH}:/path/to/RentEstimator"
 
       - name: scrape
         env:
           MONGODB_URI: ${{ secrets.MONGODB_URI }}
         run: python scrape/scrape.py
-        working-directory: RentEstimator
