@@ -19,6 +19,10 @@ jobs:
 
       - name: install python packages
         run: pip install -r requirements.txt
+        run: 
 
       - name: scrape
+        env:
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
         run: python scrape/scrape.py
+        working-directory: ./RentEstimator
