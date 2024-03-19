@@ -1,8 +1,15 @@
 import time
 from playwright.sync_api import sync_playwright, TimeoutError as PlaywrightTimeoutError
-from utils.utils import extract_zip_code, extract_number, mixed_number_to_decimal
 from db.db_accessor import add_entry_to_db, delete_all_entries
 import csv
+import sys
+from pathlib import Path
+
+script_location = Path(__file__).absolute().parent
+parent_directory = script_location.parent
+sys.path.append(str(parent_directory))
+
+from utils.utils import extract_zip_code, extract_number, mixed_number_to_decimal
 
 def start_scraping():
     timeout = 3000
