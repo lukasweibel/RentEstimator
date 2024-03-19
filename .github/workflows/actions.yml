@@ -23,15 +23,8 @@ jobs:
       - name: install python packages
         run: pip install -r requirements.txt
 
-      - name: Check if MONGODB_URI is set
-        run: |
-          if [ -z "${MONGODB_URI}" ]; then
-            echo "MONGODB_URI is not set."
-          else
-            echo "MONGODB_URI is set."
-          fi
-        env:
-          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+      - name: setup playwright
+        run: playwright install
 
       - name: scrape
         env:
