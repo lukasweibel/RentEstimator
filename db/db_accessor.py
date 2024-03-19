@@ -8,6 +8,8 @@ load_dotenv()
 uri = os.getenv("MONGODB_URI")
 
 client = MongoClient(uri)
+
+print(f"URI: {uri}")
     
 db = client['mdm']
     

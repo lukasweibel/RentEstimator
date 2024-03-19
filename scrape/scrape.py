@@ -5,10 +5,6 @@ import csv
 import sys
 from pathlib import Path
 
-script_location = Path(__file__).absolute().parent
-parent_directory = script_location.parent
-sys.path.append(str(parent_directory))
-
 from utils.utils import extract_zip_code, extract_number, mixed_number_to_decimal
 
 def start_scraping():
