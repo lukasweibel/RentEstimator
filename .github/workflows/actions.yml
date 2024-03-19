@@ -19,3 +19,6 @@ jobs:
 
       - name: install python packages
         run: pip install -r requirements.txt
+
+      - name: scrape
+        run: python --version
