@@ -16,6 +16,9 @@ jobs:
         with:
           python-version: "3.12.1" # install the python version needed
           cache: "pip"
+          
+      - name: Set PYTHONPATH
+        run: echo "PYTHONPATH=$GITHUB_WORKSPACE" >> $GITHUB_ENV
 
       - name: install python packages
         run: pip install -r requirements.txt
