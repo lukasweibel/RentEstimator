@@ -10,7 +10,11 @@ from utils.utils import extract_zip_code, extract_number, mixed_number_to_decima
 def start_scraping():
     timeout = 3000
     #cities = ['Dinhard', 'Seuzach', 'Winterthur', 'Luzern', 'Bern', 'Zürich', 'Lausanne', 'Basel', 'Genf', 'Lugano', 'Bellinzona', 'Aarau', 'Olten', 'Baden']
-    cities = ['Dinhard', 'Seuzach', 'Winterthur']
+    #cities = ['Dinhard', 'Seuzach']
+    
+    # Read cities from file
+    with open('cities.txt', 'r') as file:
+        cities = [line.strip() for line in file.readlines()]
 
     def run(playwright):
 
@@ -72,10 +76,9 @@ def start_scraping():
                         print(f"Encountered a timeout: {e}")
                         break
 
-            # ---------------------
         context.close()
         browser.close()
-        print("fauilures: " + failures)
+        print("fauilures: " + str(failures))
 
     # Start the Playwright session and run the scraping process
     with sync_playwright() as playwright:

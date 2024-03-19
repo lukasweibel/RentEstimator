@@ -30,3 +30,6 @@ jobs:
         env:
           MONGODB_URI: ${{ secrets.MONGODB_URI }}
         run: python scrape/scrape.py
+
+      - name: upload model
+        run: python scrape/scrape.py
