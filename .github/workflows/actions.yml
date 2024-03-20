@@ -39,6 +39,5 @@ jobs:
       - name: train and optimize model
         env:
           AZURE_CONNECTION_STRING: ${{ secrets.AZURE_CONNECTION_STRING }}
-        env:
           MONGODB_URI: ${{ secrets.MONGODB_URI }}
         run: python model/forest.py
