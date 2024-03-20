@@ -19,7 +19,7 @@ def start_scraping():
         delete_all_entries()
         failures = 0
         
-        browser = playwright.chromium.launch(headless=False)
+        browser = playwright.chromium.launch(headless=True)
 
         for city in cities:
             context = browser.new_context()
