@@ -9,8 +9,6 @@ from utils.utils import extract_zip_code, extract_number, mixed_number_to_decima
 
 def start_scraping():
     timeout = 3000
-    #cities = ['Dinhard', 'Seuzach', 'Winterthur', 'Luzern', 'Bern', 'Zürich', 'Lausanne', 'Basel', 'Genf', 'Lugano', 'Bellinzona', 'Aarau', 'Olten', 'Baden']
-    #cities = ['Dinhard', 'Seuzach']
     
     # Read cities from file
     with open('cities.txt', 'r') as file:
@@ -21,7 +19,7 @@ def start_scraping():
         delete_all_entries()
         failures = 0
         
-        browser = playwright.chromium.launch(headless=True)
+        browser = playwright.chromium.launch(headless=False)
 
         for city in cities:
             context = browser.new_context()
