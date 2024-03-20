@@ -32,4 +32,4 @@ jobs:
         run: python scrape/scrape.py
 
       - name: upload model
-        run: python scrape/scrape.py
+        run: python model/blob_accessor.py
