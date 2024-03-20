@@ -1,13 +1,13 @@
 import os
 from azure.storage.blob import BlobServiceClient
 from dotenv import load_dotenv
-from joblib import dump
+from joblib import dump, load
 
 load_dotenv()
 
 azure_connection_string = os.getenv("AZURE_CONNECTION_STRING")
 
-def save_model():
+def save_model(regressor):
     try:
         print("Azure Blob Storage Python quickstart sample")
 
@@ -37,7 +37,7 @@ def save_model():
         upload_file_path = os.path.join(".", local_file_name)
 
         # Assuming you have a model object to save; replace this with your actual model
-        model = "your_model_object_here"
+        model = regressor
         dump(model, upload_file_path)
 
         # Create a blob client using the local file name as the name for the blob
@@ -54,5 +54,20 @@ def save_model():
         print('Exception:')
         print(ex)
 
-if __name__ == "__main__":
-    save_model()
+    
+def load_model(container_name='rentestimator-model-1', model_blob_name='model.joblib'):
+    blob_service_client = BlobServiceClient.from_connection_string(azure_connection_string)
+
+    blob_client = blob_service_client.get_blob_client(container=container_name, blob=model_blob_name)
+
+    download_file_path = os.path.join(".", model_blob_name)
+
+    with open(download_file_path, "wb") as download_file:
+        download_file.write(blob_client.download_blob().readall())
+
+    print(f"Downloaded model '{model_blob_name}' from container '{container_name}'.")
+
+    model = load(download_file_path)
+    print("Model loaded successfully.")
+
+    return model

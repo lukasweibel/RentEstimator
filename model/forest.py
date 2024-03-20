@@ -3,7 +3,6 @@ from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import train_test_split
 from db.db_accessor import add_entry_to_db, delete_all_entries, get_all_entries
 import pandas as pd
-import pandas as pd
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import r2_score
@@ -16,6 +15,8 @@ def predict(area, rooms, zip):
     try:
         #regressor = load('model.joblib')
         regressor = load_model()
+        print("Model:")
+        print(regressor)
     except (EOFError, FileNotFoundError) as e:
         optimize_model()
         regressor = load('model.joblib')
@@ -78,9 +79,12 @@ def optimize_model():
                         best['model'] = regressor
 
     dump(best['model'], 'model.joblib')
-    save_model()
+    save_model(best['model'])
     print(f"The best model: {best}")
 
 def train_model_once():
     documents_df = get_all_entries()
     train(documents_df, 1, 5, 0.1, 1)
+
+if __name__ == "__main__":
+    optimize_model()
