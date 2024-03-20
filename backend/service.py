@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request
 from scrape.scrape import run_scraping
-from model.forest import predict, train_model_once, optimize_model
+from model.forest import predict, optimize_model
 from flask import Flask, send_from_directory
 from flask import Flask
 

@@ -11,7 +11,8 @@
     event.preventDefault();
 
     // The URL to your Flask endpoint
-    const url = "http://127.0.0.1:5000/predict";
+    //const url = "http://127.0.0.1:5000/predict";
+    const url = "/predict";
 
     try {
       const response = await fetch(url, {

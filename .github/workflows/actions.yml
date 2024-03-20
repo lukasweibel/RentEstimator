@@ -35,3 +35,6 @@ jobs:
         env:
           AZURE_CONNECTION_STRING: ${{ secrets.AZURE_CONNECTION_STRING }}
         run: python model/blob_accessor.py
+
+      - name: train and optimize model
+        run: python model/forest.py
