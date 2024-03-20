@@ -32,4 +32,6 @@ jobs:
         run: python scrape/scrape.py
 
       - name: upload model
+        env:
+          AZURE_CONNECTION_STRING: ${{ secrets.AZURE_CONNECTION_STRING }}
         run: python model/blob_accessor.py
