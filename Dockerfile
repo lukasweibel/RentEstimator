@@ -12,8 +12,9 @@ FROM python:3.12.1
 # Copy Files
 WORKDIR /usr/src/app
 #COPY backend/service.py backend/service.py
-#COPY frontend/public/build frontend/build
 COPY . .
+COPY frontend/public/build frontend/build
+
 
 # Install
 COPY requirements.txt requirements.txt

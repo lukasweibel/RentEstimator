@@ -12,11 +12,13 @@ export PYTHONPATH="${PYTHONPATH}:/path/to/RentEstimator"
 
 export FLASK_APP=backend/service.py
 
-flask run
+flask run --host=0.0.0.0 --port=80
 
-az container create --resource-group mdm-weibelu1-project1 --name mdm-rentestimator --image lukasweibel99/rentestimator:latest --dns-name-label mdm-rentestimator --ports 5000
+az container create --resource-group mdm-weibelu1-project1 --name mdm-rentestimator --image lukasweibel99/rentestimator:latest --dns-name-label mdm-rentestimator --ports 80
 
 az container logs --resource-group mdm-weibelu1-project1 --name mdm-rentestimator
+
+az container restart --resource-group mdm-weibelu1-project1 --name mdm-rentestimator
 
 curl -X POST http://localhost:5000/predict \
  -H "Content-Type: application/json" \
