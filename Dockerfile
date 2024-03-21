@@ -13,7 +13,7 @@ FROM python:3.12.1
 WORKDIR /usr/src/app
 #COPY backend/service.py backend/service.py
 COPY . .
-COPY frontend/public/build frontend/build
+#COPY frontend/public/build frontend/build
 
 
 # Install
