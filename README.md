@@ -14,6 +14,10 @@ export FLASK_APP=backend/service.py
 
 flask run
 
+az container create --resource-group mdm-weibelu1-project1 --name mdm-rentestimator --image lukasweibel99/rentestimator:latest --dns-name-label mdm-rentestimator --ports 5000
+
+az container logs --resource-group mdm-weibelu1-project1 --name mdm-rentestimator
+
 curl -X POST http://localhost:5000/predict \
  -H "Content-Type: application/json" \
  -d '{"area": 100, "rooms": 3, "zip": 8400}'

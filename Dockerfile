@@ -1,8 +1,8 @@
 # Usage
-# docker buildx build --platform linux/amd64 -t weibelu1/rentestimator . 
-# docker buildx build --platform linux/arm64 -t weibelu1/rentestimator . --load 
+# docker buildx build --platform linux/amd64 -t lukasweibel99/rentestimator . 
+# docker buildx build --platform linux/arm64 -t lukasweibel99/rentestimator . --load 
 # add envs command is on the desktop
-# docker run --name rentestimator -p 9001:5000 -d weibelu1/rentestimator
+# docker run --name rentestimator -p 9001:5000 -d lukasweibel99/rentestimator
 
 # docker stop rentestimator  
 # docker rm rentestimator  
@@ -20,6 +20,6 @@ COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 
 # Docker Run Command
-EXPOSE 5000
+EXPOSE 80
 ENV FLASK_APP=/usr/src/app/backend/service.py
-CMD [ "python", "-m" , "flask", "run", "--host=0.0.0.0", "--port=5000"]
+CMD [ "python", "-m" , "flask", "run", "--host=0.0.0.0", "--port=80"]
