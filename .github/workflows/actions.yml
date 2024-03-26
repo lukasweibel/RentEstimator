@@ -58,6 +58,6 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: rentestimator
+          app-name: mdm-rentestimator-webapp
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
           images: "lukasweibel99/rentestimator:latest"
