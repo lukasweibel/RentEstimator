@@ -26,11 +26,11 @@ jobs:
       - name: setup playwright
         run: playwright install
 
-      # - name: scrape
-      #   env:
-      #     MONGODB_URI: ${{ secrets.MONGODB_URI }}
-      #   run: python scrape/scrape.py
-      #   continue-on-error: true
+      #- name: scrape
+      #  env:
+      #    MONGODB_URI: ${{ secrets.MONGODB_URI }}
+      #  run: python scrape/scrape.py
+      #  continue-on-error: true
 
       - name: train and optimize model
         env:
@@ -60,4 +60,4 @@ jobs:
         with:
           app-name: rentestimator
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-          images: "mosazhaw/devopsazure:latest"
+          images: "lukasweibel99/rentestimator:latest"
