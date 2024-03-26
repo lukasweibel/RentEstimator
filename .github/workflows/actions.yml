@@ -52,3 +52,18 @@ jobs:
         run: |
           echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
           docker push lukasweibel99/rentestimator:latest
+
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Create or Update Azure Container Instance
+        run: |
+          az container create \
+            --resource-group mdm-weibelu1-project1 \
+            --name mdm-rentestimator \
+            --image lukasweibel99/rentestimator:latest \
+            --dns-name-label mdm-rentestimator \
+            --ports 80
+        shell: bash
