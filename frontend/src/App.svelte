@@ -42,6 +42,7 @@
 </script>
 
 <main>
+  <h1>RentEstimator</h1>
   <form on:submit|preventDefault={handleSubmit}>
     <input type="number" bind:value={area} placeholder="Area" />
     <input type="number" bind:value={rooms} placeholder="Rooms" />
