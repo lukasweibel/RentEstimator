@@ -16,7 +16,8 @@ def start_scraping():
 
     def run(playwright):
 
-        delete_all_entries()
+        #Duplicates are skipped. Because of that no delete_all_entries() are skipped
+        #delete_all_entries()
         failures = 0
         
         browser = playwright.chromium.launch(headless=True)

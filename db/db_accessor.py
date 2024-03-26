@@ -20,8 +20,13 @@ def add_entry_to_db(rent, area, rooms, zip_code):
         'rooms': rooms,
         'zip': zip_code
     }
-    collection.insert_one(document)
-    print("Entry added to database.")
+
+    if collection.find_one(document) is None:
+        collection.insert_one(document)
+        print("Entry added to database.")
+    else:
+        print("Document already exists. Skipping insertion.")
+
 
 def delete_all_entries():
     collection.delete_many({})
