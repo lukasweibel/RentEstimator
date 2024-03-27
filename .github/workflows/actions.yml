@@ -64,4 +64,4 @@ jobs:
         with:
           app-name: mdm-rentestimator-webapp
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-          images: "DOCKER|${{ steps.docker_tag.outputs.tag }}"
+          images: ${{ steps.docker_tag.outputs.tag }}
