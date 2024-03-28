@@ -11,7 +11,11 @@ client = MongoClient(uri)
     
 db = client['mdm']
     
-collection = db['rent']
+rent_collection = db['rent']
+
+model_collection = db['model']
+
+
 
 def add_entry_to_db(rent, area, rooms, zip_code):
     document = {
@@ -21,19 +25,19 @@ def add_entry_to_db(rent, area, rooms, zip_code):
         'zip': zip_code
     }
 
-    if collection.find_one(document) is None:
-        collection.insert_one(document)
+    if rent_collection.find_one(document) is None:
+        rent_collection.insert_one(document)
         print("Entry added to database.")
     else:
         print("Document already exists. Skipping insertion.")
 
 
 def delete_all_entries():
-    collection.delete_many({})
+    rent_collection.delete_many({})
     print("All documents deleted.")
 
 def get_all_entries():
-    documents = collection.find({})
+    documents = rent_collection.find({})
     documents_list = list(documents)
     cleaned_data = [{k: v for k, v in d.items() if k != '_id'} for d in documents_list]
 

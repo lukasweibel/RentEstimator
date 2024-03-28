@@ -1,5 +1,3 @@
-Neustes Modell laden
 Frontend erweitern
 Modelle aussuchbar machen
-Dulikate vermeiden mongodb
 PLZ transformieren für Modell -> bringt nur kleinen Mehrwert

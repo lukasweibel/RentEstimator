@@ -26,16 +26,8 @@ def predict(area, rooms, zip):
 
 def train(documents_df, n_estimators, max_depth, min_samples_split, min_samples_leaf):
 
-    #Transform to try with just the first number of Zip
-    #documents_df['zip_first_digit'] = documents_df['zip'].apply(lambda x: int(str(x)[0]))
-    #documents_df['is_city'] = documents_df['zip'].apply(lambda x: True if int(str(x)[2]) == 0 else False)
-    
-    #Try if Zip makes any differents
-    features = documents_df.iloc[:, 1:].values
-    #features = documents_df[['area', 'rooms', 'zip_first_digit']].values
-    #features = documents_df[['area', 'rooms', 'is_city', 'zip_first_digit']].values
+    features = documents_df[['area', 'rooms', 'zip']].values
     target = documents_df['rent'].values
-    #print(documents_df)
 
     X_train, X_test, y_train, y_test = train_test_split(features, target, test_size=0.2, random_state=42)
 
@@ -85,7 +77,6 @@ def optimize_model():
                         best['min_samples_leaf'] = min_samples_leaf
                         best['model'] = regressor
 
-    dump(best['model'], 'model.joblib')
     save_model(best['model'])
     print(f"The best model: {best}")
 

@@ -1,5 +1,5 @@
 <script>
-  import { onMount } from "svelte";
+  import Header from "./components/Header.svelte";
 
   let area = "";
   let rooms = "";
@@ -7,11 +7,8 @@
   let predictedValue = "";
 
   async function handleSubmit(event) {
-    // Prevent the browser from submitting the form traditionally
     event.preventDefault();
 
-    // The URL to your Flask endpoint
-    //const url = "http://127.0.0.1:5000/predict";
     const url = "/predict";
 
     try {
@@ -32,8 +29,8 @@
       }
 
       const result = await response.json();
-      predictedValue = result;
-      console.log("Prediction Result:", result);
+      predictedValue = Math.round(result); // Assuming 'result' can be directly rounded
+      console.log("Prediction Result:", predictedValue);
       // Process your result here
     } catch (error) {
       console.error("Error submitting form:", error);
@@ -42,10 +39,10 @@
 </script>
 
 <main>
-  <h1>RentEstimator 3</h1>
+  <Header></Header>
   <form on:submit|preventDefault={handleSubmit}>
-    <input type="number" bind:value={area} placeholder="Area" />
-    <input type="number" bind:value={rooms} placeholder="Rooms" />
+    <input type="number" step="any" bind:value={area} placeholder="Area" />
+    <input type="number" step="any" bind:value={rooms} placeholder="Rooms" />
     <input type="text" bind:value={zip} placeholder="ZIP Code" />
     <button type="submit">Submit</button>
   </form>
@@ -55,28 +52,67 @@
 <style>
   main {
     text-align: center;
-    padding: 1em;
-    max-width: 240px;
-    margin: 0 auto;
+    padding: 2em;
+    max-width: 320px;
+    margin: 30px auto;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   input,
   button {
-    margin: 0.5em 0; /* Spacing between inputs and button */
-    padding: 0.5em;
+    width: calc(100% - 20px); /* Adjust width to fit inside the form padding */
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box; /* Includes padding and border in the element's total width and height */
   }
 
-  input {
-    width: 90%; /* Make input fields wider */
+  input:focus,
+  button:focus {
+    border-color: #007bff;
+    outline: none; /* Removes the default outline and replaces it with a border color change */
   }
 
   button {
+    background-color: #007bff;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
     cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  button:hover {
+    background-color: #0056b3;
+  }
+
+  p {
+    color: #28a745; /* Green color for success messages */
+    margin-top: 20px;
   }
 
   @media (min-width: 640px) {
     main {
-      max-width: none;
+      max-width: 400px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    /* Adjusted for laptop screens */
+    main {
+      max-width: 600px; /* Wider form on larger screens */
+      padding: 3em; /* More padding for better aesthetics */
+      margin: 50px auto; /* Increased vertical margin */
     }
   }
 </style>

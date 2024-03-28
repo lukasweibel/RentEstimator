@@ -55,19 +55,34 @@ def save_model(regressor):
         print(ex)
 
     
-def load_model(container_name='rentestimator-model-1', model_blob_name='model.joblib'):
+def load_model():
+    container_name_prefix = "rentestimator-model-"
+
+    model_blob_name='model.joblib'
+    
     blob_service_client = BlobServiceClient.from_connection_string(azure_connection_string)
 
-    blob_client = blob_service_client.get_blob_client(container=container_name, blob=model_blob_name)
+    containers = blob_service_client.list_containers()
+
+    model_numbers = []
+    for container in containers:
+        model_numbers.append(int(container.name.split('-')[-1]))
+
+    latest_container = container_name_prefix + str(max(model_numbers))
+
+    blob_client = blob_service_client.get_blob_client(container=latest_container, blob=model_blob_name)
 
     download_file_path = os.path.join(".", model_blob_name)
 
     with open(download_file_path, "wb") as download_file:
         download_file.write(blob_client.download_blob().readall())
 
-    print(f"Downloaded model '{model_blob_name}' from container '{container_name}'.")
+    print(f"Downloaded model '{model_blob_name}' from container '{latest_container}'.")
 
     model = load(download_file_path)
-    print("Model loaded successfully.")
+    print(download_file_path)
 
     return model
+
+if __name__ == "__main__":
+    load_model()
