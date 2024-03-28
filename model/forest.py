@@ -24,7 +24,7 @@ def predict(area, rooms, zip, model):
     print("predicted Rent: " + str(predicted_rent))
     return str(predicted_rent[0])
 
-def train(documents_df, n_estimators, max_depth, min_samples_split, min_samples_leaf):
+def train(documents_df, n_estimators, max_depth):
 
     features = documents_df[['area', 'rooms', 'zip']].values
     target = documents_df['rent'].values
@@ -48,44 +48,41 @@ def optimize_model():
         'r_squared': 0,
         'n_estimators': 0,
         'max_depth': 0,
-        'min_samples_split': 0,
-        'min_samples_leaf': 0,
-        'model': None
     }
 
     param_grid = {
         'n_estimators': (10, 100),
-        'max_depth': (1, 10),
-        'min_samples_split': (1, 2),
-        'min_samples_leaf': (1, 2),
+        'max_depth': (1, 10)
     }
 
     documents_df = get_all_entries()
     
     for max_depth in range(param_grid['max_depth'][0], param_grid['max_depth'][1]):
-        for min_samples_split in range(param_grid['min_samples_split'][0], param_grid['min_samples_split'][1]):
-            for min_samples_leaf in range(param_grid['min_samples_leaf'][0], param_grid['min_samples_leaf'][1]):
                 for n_estimators in range(param_grid['n_estimators'][0], param_grid['n_estimators'][1]):
-                    result = train(documents_df, n_estimators, max_depth, None, None)
+                    result = train(documents_df, n_estimators, max_depth)
                     r_squared = result[0]
-                    regressor = result[1]
                     if r_squared > best['r_squared']:
                         best['n_estimators'] = n_estimators
                         best['r_squared'] = r_squared
                         best['max_depth'] = max_depth
-                        best['min_samples_split'] = min_samples_split/10
-                        best['min_samples_leaf'] = min_samples_leaf
-                        best['model'] = regressor
     
+    best_model = train_model_once(documents_df, best['n_estimators'], best['max_depth'])
 
-    name = save_model(best['model'])
+    name = save_model(best_model)
 
     add_model(best['r_squared'], len(documents_df), name)
+
     print(f"The best model: {best}")
 
-def train_model_once():
-    documents_df = get_all_entries()
-    train(documents_df, 1, 5, 0.1, 1)
+def train_model_once(documents_df, n_estimators, max_depth):
+    features = documents_df[['area', 'rooms', 'zip']].values
+    target = documents_df['rent'].values
+
+    regressor = RandomForestRegressor(n_estimators=n_estimators, max_depth=max_depth, random_state=42)
+
+    regressor.fit(features, target)
+
+    return regressor
 
 if __name__ == "__main__":
     optimize_model()

@@ -85,7 +85,9 @@
     <select bind:value={model} required>
       <option value="">Select a model</option>
       {#each models as modelItem}
-        <option value={modelItem.name}>{modelItem.name}</option>
+        <option value={modelItem.name}
+          >{modelItem.name} / {modelItem["r-squared"]}</option
+        >
       {/each}
     </select>
 

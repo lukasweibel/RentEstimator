@@ -32,16 +32,11 @@ jobs:
         run: python scrape/scrape.py
         continue-on-error: true
 
-      - name: train and optimize model
+      - name: train, optimize and save model
         env:
           AZURE_CONNECTION_STRING: ${{ secrets.AZURE_CONNECTION_STRING }}
           MONGODB_URI: ${{ secrets.MONGODB_URI }}
         run: python model/forest.py
-
-      - name: upload model
-        env:
-          AZURE_CONNECTION_STRING: ${{ secrets.AZURE_CONNECTION_STRING }}
-        run: python model/blob_accessor.py
 
       - name: Generate Docker Tag
         id: docker_tag
