@@ -50,12 +50,14 @@ def save_model(regressor):
 
         print("Upload completed successfully.")
 
+        return container_name
+
     except Exception as ex:
         print('Exception:')
         print(ex)
 
     
-def load_model():
+def load_model(model):
     container_name_prefix = "rentestimator-model-"
 
     model_blob_name='model.joblib'
@@ -64,20 +66,22 @@ def load_model():
 
     containers = blob_service_client.list_containers()
 
-    model_numbers = []
-    for container in containers:
-        model_numbers.append(int(container.name.split('-')[-1]))
+    #model_numbers = []
+    #for container in containers:
+    #    model_numbers.append(int(container.name.split('-')[-1]))
+    #
+    #latest_container = container_name_prefix + str(max(model_numbers))
 
-    latest_container = container_name_prefix + str(max(model_numbers))
+    container = model
 
-    blob_client = blob_service_client.get_blob_client(container=latest_container, blob=model_blob_name)
+    blob_client = blob_service_client.get_blob_client(container=container, blob=model_blob_name)
 
     download_file_path = os.path.join(".", model_blob_name)
 
     with open(download_file_path, "wb") as download_file:
         download_file.write(blob_client.download_blob().readall())
 
-    print(f"Downloaded model '{model_blob_name}' from container '{latest_container}'.")
+    print(f"Downloaded model '{model_blob_name}' from container '{container}'.")
 
     model = load(download_file_path)
     print(download_file_path)

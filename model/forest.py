@@ -1,7 +1,7 @@
 from cmath import sqrt
 from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import train_test_split
-from db.db_accessor import add_entry_to_db, delete_all_entries, get_all_entries
+from db.db_accessor import add_entry_to_db, delete_all_entries, add_model, get_all_entries
 import pandas as pd
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.preprocessing import LabelEncoder
@@ -11,9 +11,9 @@ from sklearn.model_selection import train_test_split
 from joblib import dump, load
 from model.blob_accessor import load_model, save_model
 
-def predict(area, rooms, zip):
+def predict(area, rooms, zip, model):
     try:
-        regressor = load_model()
+        regressor = load_model(model)
         print("Model:")
         print(regressor)
     except (EOFError, FileNotFoundError) as e:
@@ -76,8 +76,11 @@ def optimize_model():
                         best['min_samples_split'] = min_samples_split/10
                         best['min_samples_leaf'] = min_samples_leaf
                         best['model'] = regressor
+    
 
-    save_model(best['model'])
+    name = save_model(best['model'])
+
+    add_model(best['r_squared'], len(documents_df), name)
     print(f"The best model: {best}")
 
 def train_model_once():

@@ -1,15 +1,39 @@
 <script>
+  import { onMount } from "svelte";
   import Header from "./components/Header.svelte";
 
   let area = "";
   let rooms = "";
   let zip = "";
+  let model = "";
+  let models = [];
   let predictedValue = "";
+
+  onMount(async () => {
+    const url = "/model";
+    try {
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (response.ok) {
+        const data = await response.json();
+        models = data;
+        console.log("Models fetched:", models);
+      }
+    } catch (error) {
+      console.error("Error fetching models:", error);
+    }
+  });
 
   async function handleSubmit(event) {
     event.preventDefault();
 
     const url = "/predict";
+
+    console.log(model);
 
     try {
       const response = await fetch(url, {
@@ -21,6 +45,7 @@
           area,
           rooms,
           zip,
+          model,
         }),
       });
 
@@ -41,9 +66,29 @@
 <main>
   <Header></Header>
   <form on:submit|preventDefault={handleSubmit}>
-    <input type="number" step="any" bind:value={area} placeholder="Area" />
-    <input type="number" step="any" bind:value={rooms} placeholder="Rooms" />
-    <input type="text" bind:value={zip} placeholder="ZIP Code" />
+    <input
+      type="number"
+      step="any"
+      bind:value={area}
+      placeholder="Area"
+      required
+    />
+    <input
+      type="number"
+      step="any"
+      bind:value={rooms}
+      placeholder="Rooms"
+      required
+    />
+    <input type="text" bind:value={zip} placeholder="ZIP Code" required />
+
+    <select bind:value={model} required>
+      <option value="">Select a model</option>
+      {#each models as modelItem}
+        <option value={modelItem.name}>{modelItem.name}</option>
+      {/each}
+    </select>
+
     <button type="submit">Submit</button>
   </form>
   <p>{predictedValue}</p>

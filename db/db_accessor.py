@@ -40,6 +40,22 @@ def get_all_entries():
     documents = rent_collection.find({})
     documents_list = list(documents)
     cleaned_data = [{k: v for k, v in d.items() if k != '_id'} for d in documents_list]
-
     df = pd.DataFrame(cleaned_data)
     return df
+
+def add_model(r_squared, entries_number, name):
+    document = {
+        "r-squared": r_squared,
+        "entries": entries_number,
+        "name": name
+    }
+    result = model_collection.insert_one(document)
+    print(f"Inserted document with ID: {result.inserted_id}")
+
+def get_all_models():
+    documents = model_collection.find({})
+    documents_list = list(documents)
+    return documents_list
+
+
+    
