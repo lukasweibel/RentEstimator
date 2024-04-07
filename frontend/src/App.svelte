@@ -28,6 +28,10 @@
     }
   });
 
+  function round(longNumber) {
+    return Number(longNumber.toFixed(2));
+  }
+
   async function handleSubmit(event) {
     event.preventDefault();
 
@@ -86,7 +90,8 @@
       <option value="">Select a model</option>
       {#each models as modelItem}
         <option value={modelItem.name}
-          >{modelItem.name} / {modelItem["r-squared"]}</option
+          >{modelItem.name} / R-squared: {round(modelItem["r-squared"])} / number
+          of entries: {modelItem["entries"]}</option
         >
       {/each}
     </select>
