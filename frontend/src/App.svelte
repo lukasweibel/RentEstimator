@@ -98,7 +98,7 @@
 
     <button type="submit">Submit</button>
   </form>
-  <p>{predictedValue}</p>
+  <p>The estimated Rent is: {predictedValue} Fr.</p>
 </main>
 
 <style>
